@@ -33,12 +33,30 @@ export interface Audit {
   deletedAt?: number | null;
 }
 
+export interface Member {
+  name: string;
+  joinedAt: number;
+}
+
 export interface World {
   id: string;
   name: string;
   statuses: Status[];
   categories: Category[];
   createdAt: number;
+  /** Firebase user ids allowed to see and edit this world. */
+  members: string[];
+  memberInfo: Record<string, Member>;
+}
+
+/** Stored at invites/{token}; opening ?join=<token> lets someone add themselves. */
+export interface Invite {
+  id: string;
+  worldId: string;
+  worldName: string;
+  createdAt: number;
+  createdBy: Person;
+  active: boolean;
 }
 
 export interface Place extends Audit {

@@ -890,3 +890,11 @@ select {
   border: none;
   min-height: 34px;
 }
+
+.text.narrow {
+  max-width: 320px;
+}
+
+.settings h4 {
+  margin: 16px 0 4px;
+}

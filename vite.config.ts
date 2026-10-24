@@ -11,7 +11,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Rebadam Coords',
+        name: 'Minecraft Coords',
         short_name: 'Coords',
         description: 'Shared Minecraft coordinates, notes and links',
         theme_color: '#1d2a1a',

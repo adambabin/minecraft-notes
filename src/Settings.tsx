@@ -2,21 +2,27 @@ import { useState } from 'react';
 import {
   addItem,
   addPlace,
+  createInvite,
   createWorld,
   download,
   exportAll,
   importAll,
+  inviteUrl,
+  me,
   purge,
+  removeMember,
   restore,
   slug,
+  turnOffInvite,
   updateWorld,
+  useInvites,
   type ExportFile,
 } from './data';
 import { signOut, auth } from './firebase';
 import { parseNote } from './importNote';
 import { SEED_NOTE } from './seedNote';
 import { DIMENSIONS, type Category, type Item, type Place, type Status, type World } from './types';
-import { timeAgo, useToast } from './ui';
+import { copyText, timeAgo, useToast } from './ui';
 
 const newId = (label: string) => `${slug(label)}-${Math.random().toString(36).slice(2, 6)}`;
 
@@ -36,6 +42,7 @@ export function SettingsView({
   return (
     <div className="settings">
       <WorldsSection world={world} worlds={worlds} onSwitch={onSwitch} />
+      <MembersSection world={world} worlds={worlds} onSwitch={onSwitch} />
       <ListEditor
         title="Statuses"
         hint="Tap a place's status chip to change it."
@@ -101,8 +108,7 @@ function WorldsSection({ world, worlds, onSwitch }: { world: World; worlds: Worl
         onSubmit={(e) => {
           e.preventDefault();
           if (!name.trim()) return;
-          const id = slug(name);
-          onSwitch(worlds.some((w) => w.id === id) ? id : createWorld(name.trim(), id));
+          onSwitch(createWorld(name.trim()));
           setName('');
         }}
       >
@@ -111,6 +117,86 @@ function WorldsSection({ world, worlds, onSwitch }: { world: World; worlds: Worl
           Add
         </button>
       </form>
+    </section>
+  );
+}
+
+function MembersSection({ world, worlds, onSwitch }: { world: World; worlds: World[]; onSwitch: (id: string) => void }) {
+  const invites = useInvites(world.id);
+  const toast = useToast();
+  const myId = me().uid;
+  const members = Object.entries(world.memberInfo ?? {}).sort((a, b) => a[1].joinedAt - b[1].joinedAt);
+  const live = invites.data.filter((i) => i.active).sort((a, b) => b.createdAt - a.createdAt);
+
+  const share = async (token: string) => {
+    const url = inviteUrl(token);
+    const text = `Join my Minecraft world “${world.name}”: ${url}`;
+    try {
+      if (navigator.share) return await navigator.share({ title: `Join ${world.name}`, text, url });
+    } catch {
+      /* share sheet closed: fall back to copying */
+    }
+    toast((await copyText(url)) ? 'Invite link copied' : url);
+  };
+
+  return (
+    <section>
+      <h3>Members of {world.name}</h3>
+      <p className="hint">Everyone here can see and edit everything in this world. Nobody else can.</p>
+      <ul className="plain editor">
+        {members.map(([uid, m]) => (
+          <li key={uid} className="trash-row">
+            <span>
+              {m.name}
+              {uid === myId && ' (you)'} <small>joined {timeAgo(m.joinedAt)}</small>
+            </span>
+            {uid === myId ? (
+              <button
+                type="button"
+                className="danger"
+                onClick={() => {
+                  const last = world.members.length <= 1;
+                  if (!confirm(last ? `You're the only member. Leaving means nobody can open “${world.name}” again. Leave anyway?` : `Leave “${world.name}”? You'll need a new invite to come back.`)) return;
+                  removeMember(world.id, uid);
+                  const next = worlds.find((w) => w.id !== world.id);
+                  if (next) onSwitch(next.id);
+                }}
+              >
+                Leave
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="danger"
+                onClick={() => confirm(`Remove ${m.name} from “${world.name}”?`) && removeMember(world.id, uid)}
+              >
+                Remove
+              </button>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      <h4>Invite links</h4>
+      <p className="hint">Anyone who opens a link and signs in with Google can join. Turn a link off once your friends have joined.</p>
+      <ul className="plain editor">
+        {live.map((i) => (
+          <li key={i.id} className="trash-row">
+            <span>
+              Link by {i.createdBy.name} <small>{timeAgo(i.createdAt)}</small>
+            </span>
+            <button type="button" onClick={() => share(i.id)}>
+              Share
+            </button>
+            <button type="button" className="danger" onClick={() => turnOffInvite(i.id)}>
+              Turn off
+            </button>
+          </li>
+        ))}
+      </ul>
+      <button type="button" className="primary" onClick={() => share(createInvite(world))}>
+        + Create invite link
+      </button>
     </section>
   );
 }
@@ -292,8 +378,10 @@ function BackupSection() {
 }
 
 function NoteImportSection({ world, hasPlaces }: { world: World; hasPlaces: boolean }) {
-  const [text, setText] = useState(hasPlaces ? '' : SEED_NOTE);
-  const [open, setOpen] = useState(!hasPlaces);
+  // The original Apple Note is only offered in the realm it came from.
+  const seed = !hasPlaces && world.name.trim().toLowerCase() === 'rebadam';
+  const [text, setText] = useState(seed ? SEED_NOTE : '');
+  const [open, setOpen] = useState(seed);
   const toast = useToast();
   const parsed = parseNote(text);
 

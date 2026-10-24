@@ -1,7 +1,10 @@
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import {
+  arrayRemove,
+  arrayUnion,
   collection,
   deleteDoc,
+  deleteField,
   doc,
   getDoc,
   getDocs,
@@ -9,8 +12,10 @@ import {
   query,
   setDoc,
   updateDoc,
+  where,
   writeBatch,
   type DocumentData,
+  type Query,
 } from 'firebase/firestore';
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { auth, db } from './firebase';
@@ -19,6 +24,7 @@ import {
   DEFAULT_STATUSES,
   type Audit,
   type ImageDoc,
+  type Invite,
   type Item,
   type Person,
   type Place,
@@ -95,25 +101,45 @@ interface Live<T> {
   error: string | null;
 }
 
-function useLiveCollection<T>(path: string[] | null): Live<T> {
-  const key = path?.join('/') ?? '';
+/** `key` identifies the query; it is rebuilt only when the key changes. */
+function useLiveQuery<T>(key: string | null, build: () => Query): Live<T> {
   const [state, setState] = useState<Live<T>>({ data: [], loading: true, error: null });
   useEffect(() => {
-    if (!path) return;
+    if (!key) return;
     setState({ data: [], loading: true, error: null });
-    const [first, ...rest] = path;
-    return onSnapshot(
-      query(collection(db, first, ...rest)),
-      (snap) => setState({ data: snap.docs.map((d) => ({ ...(d.data() as DocumentData), id: d.id }) as T), loading: false, error: null }),
-      (err) => setState((s) => ({ ...s, loading: false, error: err.code })),
-    );
+    let stop = () => {};
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const listen = (attempt: number) => {
+      stop = onSnapshot(
+        build(),
+        (snap) => setState({ data: snap.docs.map((d) => ({ ...(d.data() as DocumentData), id: d.id }) as T), loading: false, error: null }),
+        (err) => {
+          // A world created or joined a moment ago may not have reached the
+          // server yet, so its rules check fails at first: try again shortly.
+          if (err.code === 'permission-denied' && attempt < 6) timer = setTimeout(() => listen(attempt + 1), 500 * 2 ** attempt);
+          else setState((s) => ({ ...s, loading: false, error: err.code }));
+        },
+      );
+    };
+    listen(0);
+    return () => {
+      clearTimeout(timer);
+      stop();
+    };
   }, [key]);
   return state;
 }
 
-export const useWorlds = () => useLiveCollection<World>(['worlds']);
-export const usePlaces = (worldId: string | null) => useLiveCollection<Place>(worldId ? ['worlds', worldId, 'places'] : null);
-export const useItems = (worldId: string | null) => useLiveCollection<Item>(worldId ? ['worlds', worldId, 'items'] : null);
+const worldsOf = (uid: string) => query(collection(db, 'worlds'), where('members', 'array-contains', uid));
+
+/** Only the worlds this person is a member of. */
+export const useWorlds = (uid: string) => useLiveQuery<World>(`worlds:${uid}`, () => worldsOf(uid));
+export const usePlaces = (worldId: string | null) =>
+  useLiveQuery<Place>(worldId && `places:${worldId}`, () => collection(db, 'worlds', worldId!, 'places'));
+export const useItems = (worldId: string | null) =>
+  useLiveQuery<Item>(worldId && `items:${worldId}`, () => collection(db, 'worlds', worldId!, 'items'));
+export const useInvites = (worldId: string) =>
+  useLiveQuery<Invite>(`invites:${worldId}`, () => query(collection(db, 'invites'), where('worldId', '==', worldId)));
 
 // ---------------------------------------------------------------------------
 // Worlds
@@ -140,10 +166,85 @@ export function slug(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'world';
 }
 
-export function createWorld(name: string, id = slug(name)): string {
-  const world: Omit<World, 'id'> = { name, statuses: DEFAULT_STATUSES, categories: DEFAULT_CATEGORIES, createdAt: Date.now() };
-  track(setDoc(doc(db, 'worlds', id), world));
-  return id;
+export function createWorld(name: string): string {
+  const { uid, name: who } = me();
+  const ref = doc(collection(db, 'worlds'));
+  const world: Omit<World, 'id'> = {
+    name,
+    statuses: DEFAULT_STATUSES,
+    categories: DEFAULT_CATEGORIES,
+    createdAt: Date.now(),
+    members: [uid],
+    memberInfo: { [uid]: { name: who, joinedAt: Date.now() } },
+  };
+  track(setDoc(ref, world));
+  return ref.id;
+}
+
+// ---------------------------------------------------------------------------
+// Members and invite links
+
+const JOIN_KEY = 'mc.joinToken';
+
+/** Holds on to ?join=<token> through the Google sign-in. */
+export function pendingJoin(): string | null {
+  const url = new URL(location.href);
+  const token = url.searchParams.get('join');
+  try {
+    if (token) {
+      sessionStorage.setItem(JOIN_KEY, token);
+      url.searchParams.delete('join');
+      history.replaceState(null, '', url);
+    }
+    return token ?? sessionStorage.getItem(JOIN_KEY);
+  } catch {
+    return token;
+  }
+}
+
+export function clearPendingJoin() {
+  try {
+    sessionStorage.removeItem(JOIN_KEY);
+  } catch {
+    /* nothing stored */
+  }
+}
+
+export function inviteUrl(token: string): string {
+  const url = new URL(import.meta.env.BASE_URL, location.origin);
+  url.searchParams.set('join', token);
+  return url.toString();
+}
+
+export function createInvite(world: World): string {
+  const ref = doc(collection(db, 'invites'));
+  const invite: Omit<Invite, 'id'> = { worldId: world.id, worldName: world.name, createdAt: Date.now(), createdBy: me(), active: true };
+  track(setDoc(ref, invite));
+  return ref.id;
+}
+
+export function turnOffInvite(token: string) {
+  track(deleteDoc(doc(db, 'invites', token)));
+}
+
+export async function getInvite(token: string): Promise<Invite | null> {
+  const snap = await getDoc(doc(db, 'invites', token));
+  return snap.exists() ? ({ ...snap.data(), id: snap.id } as Invite) : null;
+}
+
+/** Adds the signed-in person to the invite's world. Needs a connection. */
+export async function joinWorld(invite: Invite) {
+  const { uid, name } = me();
+  await updateDoc(doc(db, 'worlds', invite.worldId), {
+    members: arrayUnion(uid),
+    [`memberInfo.${uid}`]: { name, joinedAt: Date.now() },
+    joinedWith: invite.id,
+  });
+}
+
+/** Removes someone (or yourself, to leave) from a world. */
+export function removeMember(worldId: string, uid: string) {
+  track(updateDoc(doc(db, 'worlds', worldId), { members: arrayRemove(uid), [`memberInfo.${uid}`]: deleteField() }));
 }
 
 export function updateWorld(id: string, patch: Partial<Omit<World, 'id'>>) {
@@ -231,7 +332,7 @@ export interface ExportFile {
 }
 
 export async function exportAll(): Promise<ExportFile> {
-  const worlds = await getDocs(collection(db, 'worlds'));
+  const worlds = await getDocs(worldsOf(me().uid));
   const out: ExportFile = { version: 1, exportedAt: new Date().toISOString(), worlds: [] };
   for (const w of worlds.docs) {
     const sub = async <T,>(name: string) =>
@@ -249,9 +350,15 @@ export async function exportAll(): Promise<ExportFile> {
 /** Restores an export. Entries are written by id, so re-importing never duplicates. */
 export async function importAll(file: ExportFile): Promise<number> {
   let count = 0;
+  const { uid, name } = me();
   for (const { world, places, items, images } of file.worlds) {
-    const { id: worldId, ...worldData } = world;
-    track(setDoc(doc(db, 'worlds', worldId), worldData, { merge: true }));
+    // Membership is never restored from a file: you can restore into worlds
+    // you're already in, and anything else comes back as a new world of yours.
+    const { id: backupId, members: _m, memberInfo: _mi, ...worldData } = world;
+    const mine = await getDoc(doc(db, 'worlds', backupId)).then((d) => d.exists(), () => false);
+    const worldId = mine ? backupId : doc(collection(db, 'worlds')).id;
+    if (mine) track(setDoc(doc(db, 'worlds', worldId), worldData, { merge: true }));
+    else track(setDoc(doc(db, 'worlds', worldId), { ...worldData, members: [uid], memberInfo: { [uid]: { name, joinedAt: Date.now() } } }));
     const entries: [string, { id: string }][] = [
       ...places.map((p) => ['places', p] as [string, { id: string }]),
       ...items.map((i) => ['items', i] as [string, { id: string }]),

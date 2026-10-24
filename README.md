@@ -1,6 +1,6 @@
 # minecraft-notes
 
-**Rebadam Coords**: a phone-friendly web app where two players save Minecraft (Bedrock) coordinates, statuses, notes, links and photos, all shared live.
+**Minecraft Coords**: a phone-friendly web app for saving Minecraft (Bedrock) coordinates, statuses, notes, links and photos, shared live with the people you play with.
 
 - **Places**: X / Y / Z with a ± button per axis (the iPhone number pad has no minus key), dimension, type, status, notes, photos, and places nested inside places (e.g. a portal inside a cave). Tap a row to expand it; tap the status chip to change it. Shows the matching Nether/Overworld coordinates, can copy coordinates for `/tp`, and can sort by distance from where you are.
 - **Notes & links**: to-dos, links (YouTube thumbnails included), notes, and photo sets (house inspiration).
@@ -25,7 +25,7 @@ It all runs on free tiers: Firestore's Spark plan (1 GB storage, 50k reads / 20k
 2. **Sign-in**: in the left menu go to **Build → Authentication → Get started**, then **Sign-in method → Google → Enable**. Pick your email as the support email and click **Save**.
    Then open **Authentication → Settings → Authorized domains → Add domain** and add `adambabin.github.io`.
 3. **Database**: go to **Build → Firestore Database → Create database**. Pick a location near you (e.g. `nam5 (United States)`), choose **Start in production mode**, and click **Create**.
-4. **Who's allowed in**: open the **Rules** tab, paste in the contents of [`firestore.rules`](firestore.rules) with the placeholder addresses replaced by your real Gmail addresses, and click **Publish**. Keep the real addresses only in the console, not in this public repo.
+4. **Who can see what**: open the **Rules** tab, paste in the contents of [`firestore.rules`](firestore.rules) unchanged, and click **Publish**. No email addresses are needed.
 5. **Web app config**: click the gear icon → **Project settings → General**. Under "Your apps", click the **`</>`** (Web) icon, give it a nickname, leave Hosting unchecked, and click **Register app**. Copy the `firebaseConfig = { ... }` values into [`src/firebaseConfig.ts`](src/firebaseConfig.ts), or send them to Claude to add. These values are safe to commit; the rules above are what keep everyone else out.
 
 ### 2. Turn on GitHub Pages
@@ -45,8 +45,13 @@ In the GitHub repo, go to **Settings → Pages → Build and deployment → Sour
 3. Open it from the Home Screen and **Sign in with Google**. You stay signed in until you tap Sign out.
 4. First time only: **More → Import from a note** is pre-filled with the old Apple Note. Check the preview and tap **Import**.
 
-## Adding someone later
-In the Firebase console, go to **Firestore → Rules**, add their Gmail address (lowercase) to the list, and tap **Publish**.
+## Sharing and privacy
+- Anyone can sign in with Google. A new person starts with no worlds and names their first one. It's private to them.
+- Each world has its own members, and only members can see or change anything in it. The database rules enforce this, not just the app.
+- **To share a world:** go to **More → Members → Create invite link** and send the link. Whoever opens it and signs in can join with full edit access. Turn the link off once your friends have joined; links stay active until then.
+- **Remove** someone, or **Leave** a world yourself, from the same screen.
+- Worlds created before members existed are upgraded once with **Actions → One-time members migration → Run workflow**. Everyone who added something to the world becomes a member.
+- On the free Firebase plan, heavy use by others can at worst hit the daily free limit and pause the app until the next day. It can't create a bill, because the free plan has no billing.
 
 ## Development
 

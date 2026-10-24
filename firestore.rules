@@ -1,27 +1,60 @@
 rules_version = '2';
 
-// Only the Google accounts listed here can read or write anything.
-// The real addresses live only in Firebase console → Firestore → Rules, so
-// they aren't published in this public repo. To change who's allowed in,
-// edit the list there (lowercase Gmail addresses) and tap Publish.
+// Anyone can sign in with Google, but each world is only visible to its own
+// members. People join a world through an invite link (invites/{token}).
+// After editing, paste this file into Firebase console → Firestore → Rules
+// and tap Publish.
 service cloud.firestore {
   match /databases/{database}/documents {
-    function allowed() {
-      return request.auth != null
-        && request.auth.token.email_verified == true
-        && request.auth.token.email.lower() in [
-          'player-one@gmail.com',
-          'player-two@gmail.com'
-        ];
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function worldDoc(worldId) {
+      return get(/databases/$(database)/documents/worlds/$(worldId));
+    }
+
+    function isMember(worldId) {
+      return signedIn() && request.auth.uid in worldDoc(worldId).data.members;
     }
 
     match /worlds/{worldId} {
-      allow read, write: if allowed();
+      allow read: if signedIn() && request.auth.uid in resource.data.members;
+
+      // A new world starts with only its creator as a member.
+      allow create: if signedIn()
+        && request.resource.data.members == [request.auth.uid]
+        && request.resource.data.memberInfo.keys().hasOnly([request.auth.uid]);
+
+      // Members can change anything; everyone else can only add themselves,
+      // and only by naming a live invite for this world.
+      allow update: if (signedIn() && request.auth.uid in resource.data.members) || joining(worldId);
+
+      function joining(worldId) {
+        let invite = get(/databases/$(database)/documents/invites/$(request.resource.data.joinedWith));
+        let before = resource.data;
+        let after = request.resource.data;
+        return signedIn()
+          && invite.data.worldId == worldId
+          && invite.data.active == true
+          && after.diff(before).affectedKeys().hasOnly(['members', 'memberInfo', 'joinedWith'])
+          && after.members.toSet() == before.members.toSet().union([request.auth.uid].toSet())
+          && after.memberInfo.diff(before.memberInfo).affectedKeys().hasOnly([request.auth.uid]);
+      }
 
       match /{kind}/{docId} {
-        allow read: if allowed();
-        allow write: if allowed() && kind in ['places', 'items', 'images'];
+        allow read: if isMember(worldId);
+        allow write: if isMember(worldId) && kind in ['places', 'items', 'images'];
       }
+    }
+
+    match /invites/{token} {
+      // Tokens are long random ids, so knowing one is what grants access.
+      allow get: if signedIn();
+      allow list: if signedIn() && isMember(resource.data.worldId);
+      allow create: if isMember(request.resource.data.worldId)
+        && request.resource.data.active == true;
+      allow update, delete: if isMember(resource.data.worldId);
     }
   }
 }
