@@ -1,0 +1,27 @@
+rules_version = '2';
+
+// Only the Google accounts listed here can read or write anything.
+// The real addresses live only in Firebase console → Firestore → Rules, so
+// they aren't published in this public repo. To change who's allowed in,
+// edit the list there (lowercase Gmail addresses) and tap Publish.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function allowed() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.lower() in [
+          'player-one@gmail.com',
+          'player-two@gmail.com'
+        ];
+    }
+
+    match /worlds/{worldId} {
+      allow read, write: if allowed();
+
+      match /{kind}/{docId} {
+        allow read: if allowed();
+        allow write: if allowed() && kind in ['places', 'items', 'images'];
+      }
+    }
+  }
+}

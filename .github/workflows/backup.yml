@@ -1,0 +1,53 @@
+name: Nightly backup
+
+# Copies everything out of Firestore onto the `backups` branch every night.
+# Needs the FIREBASE_SERVICE_ACCOUNT repository secret (see README).
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: backup
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Check out the backups branch
+        run: |
+          if git ls-remote --exit-code --heads origin backups >/dev/null; then
+            git fetch origin backups
+            git worktree add backup-out origin/backups
+            git -C backup-out checkout -B backups origin/backups
+          else
+            git worktree add --orphan -b backups backup-out
+          fi
+
+      - name: Export Firestore
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node scripts/backup.mjs backup-out
+
+      - name: Commit if anything changed
+        working-directory: backup-out
+        run: |
+          git config user.name "backup-bot"
+          git config user.email "backup-bot@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes since last backup"
+          else
+            git commit -m "Backup $(date -u +%Y-%m-%d)"
+            git push origin backups
+          fi
