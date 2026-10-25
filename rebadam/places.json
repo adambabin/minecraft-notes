@@ -1,0 +1,679 @@
+[
+  {
+    "id": "JFS2Qnsn21QAgb2Hxk44",
+    "name": "Small lava/obsidion",
+    "notes": "cave through sky bridge 1",
+    "x": -218,
+    "y": -55,
+    "z": 300,
+    "dimension": "overworld",
+    "categoryId": "resource",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853897873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853897873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "UJRTpzdm9uusfimXFFyG",
+    "name": "Cave",
+    "notes": "",
+    "x": 936,
+    "y": 86,
+    "z": 1,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853898873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853898873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "nCP8EekwnmDSphkxxJIa",
+    "name": "Crevasse",
+    "notes": "",
+    "x": 33,
+    "y": 66,
+    "z": 12,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853899873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853899873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "WnPUgrj6NTYO3FuoLi7Y",
+    "name": "Nether portal",
+    "notes": "",
+    "x": 119,
+    "y": 76,
+    "z": 7,
+    "dimension": "nether",
+    "categoryId": "portal",
+    "statusId": "unexplored",
+    "parentId": "sX56Wz5Rb1ptlNrknRdG",
+    "imageIds": [],
+    "createdAt": 1792853900873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853900873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "sX56Wz5Rb1ptlNrknRdG",
+    "name": "Zombie XP",
+    "notes": "",
+    "x": 949,
+    "y": 76,
+    "z": 57,
+    "dimension": "overworld",
+    "categoryId": "spawner",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853901873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853901873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "FNpppASjRJY8y3ZCq5b8",
+    "name": "Nether portal",
+    "notes": "",
+    "x": 57,
+    "y": 65,
+    "z": 199,
+    "dimension": "nether",
+    "categoryId": "portal",
+    "statusId": "unexplored",
+    "parentId": "u7z9aNbg8luZfBixH5RN",
+    "imageIds": [],
+    "createdAt": 1792853902873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853902873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "u7z9aNbg8luZfBixH5RN",
+    "name": "ISLAND OF DESPAIR",
+    "notes": "",
+    "x": 396,
+    "y": 62,
+    "z": 1568,
+    "dimension": "overworld",
+    "categoryId": "landmark",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853903873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853903873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "PXWeAurTQ8UJ899ZflV3",
+    "name": "Cave w/mobs",
+    "notes": "I added some lights at entrance but didn’t go deep bc of mobs",
+    "x": 963,
+    "y": 81,
+    "z": 73,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "danger",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853904873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853904873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "qJFUBqHWEcKu5hMkscOp",
+    "name": "Cave",
+    "notes": "",
+    "x": 39,
+    "y": 69,
+    "z": 489,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853905873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853905873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "3uzagAvKmP73HotC8j4g",
+    "name": "Skeleton spawner",
+    "notes": "",
+    "x": 1885,
+    "y": -32,
+    "z": 1361,
+    "dimension": "overworld",
+    "categoryId": "spawner",
+    "statusId": "unexplored",
+    "parentId": "NiPAsW0ytpd5NFl1fwKg",
+    "imageIds": [],
+    "createdAt": 1792853906873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853906873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "TW6g8BICR0dD2i45dKwV",
+    "name": "weird end stuff",
+    "notes": "",
+    "x": 1845,
+    "y": -41,
+    "z": 1296,
+    "dimension": "overworld",
+    "categoryId": "landmark",
+    "statusId": "unexplored",
+    "parentId": "NiPAsW0ytpd5NFl1fwKg",
+    "imageIds": [],
+    "createdAt": 1792853907873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853907873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "KIy14yh8X6luvFfUFD2S",
+    "name": "Staircase down",
+    "notes": "Approximate.",
+    "x": 1857,
+    "y": 70,
+    "z": 1219,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "unexplored",
+    "parentId": "D4OYoeH0EfJm8ojVbbm9",
+    "imageIds": [],
+    "createdAt": 1792853908873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853908873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "JY0MApbWrgaHOhp26any",
+    "name": "Overworld Nether Portral",
+    "notes": "",
+    "x": 1918,
+    "y": -7,
+    "z": 1192,
+    "dimension": "overworld",
+    "categoryId": "portal",
+    "statusId": "unexplored",
+    "parentId": "D4OYoeH0EfJm8ojVbbm9",
+    "imageIds": [],
+    "createdAt": 1792853909873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853909873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "5heCvKquDp93FbunlbNW",
+    "name": "Nether Portal",
+    "notes": "Y coordinates didn’t want to convert to negative",
+    "x": 232,
+    "y": 8,
+    "z": 152,
+    "dimension": "nether",
+    "categoryId": "portal",
+    "statusId": "unexplored",
+    "parentId": "D4OYoeH0EfJm8ojVbbm9",
+    "imageIds": [],
+    "createdAt": 1792853910873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853910873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "D4OYoeH0EfJm8ojVbbm9",
+    "name": "Deep cave lots to explore (make nether portal)",
+    "notes": "DEATH CAVE w/ END STUFF",
+    "x": 1857,
+    "y": -8,
+    "z": 1219,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "danger",
+    "parentId": "NiPAsW0ytpd5NFl1fwKg",
+    "imageIds": [],
+    "createdAt": 1792853911873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853911873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "NiPAsW0ytpd5NFl1fwKg",
+    "name": "Cave",
+    "notes": "",
+    "x": 1663,
+    "y": 65,
+    "z": 1496,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853912873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853912873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "wuQ9W2f7tthSFwX4BktA",
+    "name": "Crevasse",
+    "notes": "",
+    "x": 1908,
+    "y": 97,
+    "z": 1355,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853913873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853913873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "udOBqceLOGsCxSK6hSv7",
+    "name": "Cave mouth",
+    "notes": "",
+    "x": 1785,
+    "y": 62,
+    "z": 1324,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "done",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853914873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853914873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "GGhtuJK64R1SOy7g678x",
+    "notes": "Village breeder, planned trading post",
+    "x": 670,
+    "y": 63,
+    "z": 703,
+    "dimension": "overworld",
+    "categoryId": "village",
+    "parentId": null,
+    "createdAt": 1792853915873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null,
+    "statusId": "project",
+    "name": "Prison / Trading post",
+    "updatedBy": {
+      "uid": "5Zodcs3VIXMj5eEhhVL0gEFS4Z53",
+      "name": "Rebecca"
+    },
+    "imageIds": [
+      "rTNLYzV5UPMFGNbrHdZl"
+    ],
+    "updatedAt": 1792867987293
+  },
+  {
+    "id": "GxbsuJHTQddYgxbihynq",
+    "name": "Amethyst cave",
+    "notes": "",
+    "x": -108,
+    "y": -6,
+    "z": -10,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853916873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853916873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "Mn0NUdjrklRnS18B1NgF",
+    "name": "Unexplored cave nearish to iron farm",
+    "notes": "",
+    "x": 157,
+    "y": 65,
+    "z": 95,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853917873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853917873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "0shZr2Znv8AgRWSKEFuw",
+    "name": "Unexplored cave",
+    "notes": "",
+    "x": 516,
+    "y": 57,
+    "z": 480,
+    "dimension": "overworld",
+    "categoryId": "cave",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853918873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853918873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "poPKtyoaCp8aTLYq1Xig",
+    "name": "Skeleton spawn",
+    "notes": "",
+    "x": 263,
+    "y": 65,
+    "z": -93,
+    "dimension": "overworld",
+    "categoryId": "spawner",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853919873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853919873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "ssvbJTbRjtvQcqxy72z7",
+    "x": 800,
+    "y": 65,
+    "z": 200,
+    "dimension": "overworld",
+    "categoryId": "village",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853920873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null,
+    "updatedBy": {
+      "uid": "5Zodcs3VIXMj5eEhhVL0gEFS4Z53",
+      "name": "Rebecca"
+    },
+    "name": "Ice Village",
+    "statusId": "partial",
+    "notes": "Took some villagers from here for the iron farm. Still some villagers here.",
+    "updatedAt": 1792868936317
+  },
+  {
+    "id": "QZ1G5oquhDZrlX5G6LJT",
+    "name": "Village",
+    "notes": "villagers dead",
+    "x": -370,
+    "y": 67,
+    "z": 170,
+    "dimension": "overworld",
+    "categoryId": "village",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853921873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853921873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "mERxWZzGkLuBJEkCC5kg",
+    "name": "Lava",
+    "notes": "",
+    "x": -455,
+    "y": 83,
+    "z": 288,
+    "dimension": "overworld",
+    "categoryId": "resource",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853922873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853922873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  },
+  {
+    "id": "W0ukDHzLFl1yGMl6ECjw",
+    "name": "Position",
+    "notes": "",
+    "x": 0,
+    "y": 57,
+    "z": 195,
+    "dimension": "overworld",
+    "categoryId": "landmark",
+    "statusId": "unexplored",
+    "parentId": null,
+    "imageIds": [],
+    "createdAt": 1792853923873,
+    "createdBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1792853923873,
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "deleted": false,
+    "deletedAt": null
+  }
+]
