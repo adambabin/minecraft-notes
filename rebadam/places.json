@@ -451,7 +451,6 @@
   },
   {
     "id": "GGhtuJK64R1SOy7g678x",
-    "notes": "Village breeder, planned trading post",
     "x": 670,
     "y": 63,
     "z": 703,
@@ -467,14 +466,15 @@
     "deletedAt": null,
     "statusId": "project",
     "name": "Prison / Trading post",
-    "updatedBy": {
-      "uid": "5Zodcs3VIXMj5eEhhVL0gEFS4Z53",
-      "name": "Rebecca"
-    },
     "imageIds": [
       "rTNLYzV5UPMFGNbrHdZl"
     ],
-    "updatedAt": 1792867987293
+    "notes": "Village breeder, planned trading post\nhttps://youtu.be/q3QQ2QlhnF0",
+    "updatedBy": {
+      "uid": "5RIqlhPrMsUPGYY4dHi3VrXM7Z83",
+      "name": "Adam"
+    },
+    "updatedAt": 1793926592228
   },
   {
     "id": "GxbsuJHTQddYgxbihynq",
